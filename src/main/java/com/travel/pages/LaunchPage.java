@@ -39,4 +39,28 @@ public class LaunchPage extends BasePage {
         wait.until(visibilityOf(myAccountLink));
         return new DashBoard();
     }
+    public LaunchPage launchUrl(String url){
+        driver.navigate().to(url);
+        waitForPageToLoad();
+        pause(3);
+        WebElement acceptBtn = driver.findElement(By.cssSelector("#onetrust-accept-btn-handler"));
+        wait.until(visibilityOf(acceptBtn));
+        highlightAndClick(acceptBtn);
+        return this;
+    }
+    public LaunchPage enterUserName(String username){
+        fillText(emailTxtBox, username);
+        return this;
+    }
+    public LaunchPage enterPassword(String password){
+        fillText(pwdTxtBox, password);
+        return this;
+    }
+
+    public DashBoard clickOnNext(){
+        highlightAndClick(nextBtn);
+        wait.until(visibilityOf(myAccountLink));
+        return new DashBoard();
+    }
+
 }

@@ -14,6 +14,9 @@ public class DashBoard extends BasePage {
     @FindBy(css = "h1.auth-home__masthead__content__largeText")
     WebElement welcomeMsg;
 
+    @FindBy(css = "p.auth-home__masthead__content__smallText")
+    WebElement memberIdTxt;
+
     @FindBy(css = "div.grid-menu__button__contents")
     List<WebElement> tabs;
 
@@ -31,5 +34,10 @@ public class DashBoard extends BasePage {
             highlightAndReset(ele.get());
             return true;
         } else return false;
+    }
+
+    public boolean isMemberIdDisplayed() {
+        wait.until(visibilityOf(memberIdTxt));
+        return memberIdTxt.isDisplayed();
     }
 }

@@ -14,8 +14,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TravelAdvisorStepDef {
     LaunchPage launchPage;
@@ -42,5 +41,36 @@ public class TravelAdvisorStepDef {
         ExtentCucumberAdapter.getCurrentStep()
                 .log(Status.INFO, "screenshot",
                         MediaEntityBuilder.createScreenCaptureFromBase64String(((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64)).build());
+    }
+
+    @Given("I navigate to {string}")
+    public void iNavigateTo(String url) {
+        launchPage = new LaunchPage();
+        launchPage.launchUrl(url);
+    }
+
+    @When("I enter {string} in the email field")
+    public void iEnterInTheEmailField(String email) {
+        launchPage.enterUserName(email);
+    }
+
+    @And("I enter {string} in the password field")
+    public void iEnterInThePasswordField(String pwd) {
+        launchPage.enterPassword(pwd);
+    }
+
+    @And("I click the next button")
+    public void iClickTheButton() {
+        dashBoard = launchPage.clickOnNext();
+    }
+
+    @Then("I should be successfully logged in")
+    public void iShouldBeSuccessfullyLoggedIn() {
+        assertFalse(dashBoard.getUserName().isEmpty());
+    }
+
+    @And("I should see the Travel Advisor Portal dashboard")
+    public void iShouldSeeTheTravelAdvisorPortalDashboard() {
+        assertTrue(dashBoard.isMemberIdDisplayed());
     }
 }

@@ -38,6 +38,7 @@ public class DashBoard extends BasePage {
 
     public boolean isMemberIdDisplayed() {
         wait.until(visibilityOf(memberIdTxt));
+        highlightAndReset(memberIdTxt);
         return memberIdTxt.isDisplayed();
     }
 }

@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/java/com/travel/features"},
         plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
         glue = {"com.travel.stepdef"},
-        tags = "@TravelAdvisor")
+        tags = "@DashboardDropdown")
 public class AllTestRunner {
 }

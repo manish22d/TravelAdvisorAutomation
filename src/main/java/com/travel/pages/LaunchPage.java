@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class LaunchPage extends BasePage {
@@ -20,6 +22,12 @@ public class LaunchPage extends BasePage {
     @FindBy(css = "span.HeaderLink__text p")
     WebElement myAccountLink;
 
+    @FindBy(css = "span.HeaderLink__text p")
+    WebElement acceptCookieBtn;
+
+    @FindBy(css = "button.top-info__close")
+    List<WebElement> closeInfoBtn;
+
     public LaunchPage launchTravelAdvisorPortal() {
         driver.navigate().to(property.getProperty("app.ta.url"));
         waitForPageToLoad();
@@ -27,6 +35,10 @@ public class LaunchPage extends BasePage {
         WebElement acceptBtn = driver.findElement(By.cssSelector("#onetrust-accept-btn-handler"));
         wait.until(visibilityOf(acceptBtn));
         highlightAndClick(acceptBtn);
+        if (closeInfoBtn.size() > 0) {
+            highlightAndClick(closeInfoBtn.get(0));
+        }
+
         return this;
     }
 
@@ -39,7 +51,8 @@ public class LaunchPage extends BasePage {
         wait.until(visibilityOf(myAccountLink));
         return new DashBoard();
     }
-    public LaunchPage launchUrl(String url){
+
+    public LaunchPage launchUrl(String url) {
         driver.navigate().to(url);
         waitForPageToLoad();
         pause(3);
@@ -48,16 +61,18 @@ public class LaunchPage extends BasePage {
         highlightAndClick(acceptBtn);
         return this;
     }
-    public LaunchPage enterUserName(String username){
+
+    public LaunchPage enterUserName(String username) {
         fillText(emailTxtBox, username);
         return this;
     }
-    public LaunchPage enterPassword(String password){
+
+    public LaunchPage enterPassword(String password) {
         fillText(pwdTxtBox, password);
         return this;
     }
 
-    public DashBoard clickOnNext(){
+    public DashBoard clickOnNext() {
         highlightAndClick(nextBtn);
         wait.until(visibilityOf(myAccountLink));
         return new DashBoard();

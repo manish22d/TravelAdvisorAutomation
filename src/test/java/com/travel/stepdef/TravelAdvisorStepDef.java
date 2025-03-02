@@ -20,9 +20,13 @@ public class TravelAdvisorStepDef {
     LaunchPage launchPage;
     DashBoard dashBoard;
 
+    public TravelAdvisorStepDef() {
+        launchPage = new LaunchPage();
+    }
+
     @Given("user launch's travel advisor portal")
     public void userLaunchPreferredTravelApplication() {
-        launchPage = new LaunchPage();
+//        launchPage = new LaunchPage();
         dashBoard = launchPage.launchTravelAdvisorPortal().performLogin();
     }
 
@@ -35,6 +39,7 @@ public class TravelAdvisorStepDef {
     public void verifyTabDisplayedInDashboard(String tabName) {
         assertTrue(dashBoard.isTabsOptionsAvailable(tabName));
     }
+
     @And("get screenshot")
     public void getScreenshot() {
         WebDriver driver = WebDriverManager.getDriver();
@@ -72,5 +77,25 @@ public class TravelAdvisorStepDef {
     @And("I should see the Travel Advisor Portal dashboard")
     public void iShouldSeeTheTravelAdvisorPortalDashboard() {
         assertTrue(dashBoard.isMemberIdDisplayed());
+    }
+
+    @When("user hovers over account link dropdown")
+    public void userHoversOverAccountLinkDropdown() {
+        dashBoard.hoverOverMyAccountLink();
+    }
+
+    @Then("verify {string} option is available")
+    public void verifyOptionIsAvailable(String option) {
+        assertTrue(dashBoard.isDropdownOptionAvailable(option));
+    }
+
+    @And("verify currency dropdown is available")
+    public void verifyCurrencyDropdownIsAvailable() {
+        dashBoard.clickOnCurrencyDropdown();
+    }
+
+    @And("verify {string} is available currency dropdown")
+    public void verifyIsAvailableCurrencyDropdown(String currency) {
+        assertTrue(dashBoard.selectCurrency(currency));
     }
 }

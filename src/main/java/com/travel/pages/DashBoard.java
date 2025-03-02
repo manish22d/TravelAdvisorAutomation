@@ -3,6 +3,7 @@ package com.travel.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,12 +14,19 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 public class DashBoard extends BasePage {
     @FindBy(css = "h1.auth-home__masthead__content__largeText")
     WebElement welcomeMsg;
-
     @FindBy(css = "p.auth-home__masthead__content__smallText")
     WebElement memberIdTxt;
-
     @FindBy(css = "div.grid-menu__button__contents")
     List<WebElement> tabs;
+    @FindBy(xpath = "//div[@class='HeaderLink__flex']/div/a/div")
+    List<WebElement> dropdownOptions;
+
+    @FindBy(css = "div.currency-select3 option")
+    List<WebElement> currencyOptions;
+    @FindBy(xpath = "//div[@class='currency-select3']/select")
+    WebElement currencyDropdown;
+    @FindBy(css = "span.HeaderLink__text p")
+    WebElement myAccountLink;
 
     public String getUserName() {
         wait.until(visibilityOf(welcomeMsg));
@@ -40,5 +48,35 @@ public class DashBoard extends BasePage {
         wait.until(visibilityOf(memberIdTxt));
         highlightAndReset(memberIdTxt);
         return memberIdTxt.isDisplayed();
+    }
+
+    public void hoverOverMyAccountLink() {
+        highlightAndReset(myAccountLink);
+        moveToElement(myAccountLink);
+    }
+
+    public boolean isDropdownOptionAvailable(String dropdownOption) {
+        wait.until(visibilityOfAllElements(dropdownOptions));
+        Optional<WebElement> ele = dropdownOptions.stream().filter(e -> e.getText().equalsIgnoreCase(dropdownOption)).findFirst();
+        if (ele.isPresent()) {
+            highlightAndReset(ele.get());
+            return true;
+        } else return false;
+    }
+
+    public void clickOnCurrencyDropdown() {
+        moveToElementAndClick(currencyDropdown);
+    }
+
+    public boolean selectCurrency(String currency) {
+//        Select select = new Select(currencyDropdown);
+//        Optional<WebElement> ele = select.getOptions().stream().filter(e -> e.getText().equalsIgnoreCase(currency)).findFirst();
+        if(currencyOptions.get(0).isDisplayed())
+            clickOnCurrencyDropdown();
+        Optional<WebElement> ele = currencyOptions.stream().filter(e -> e.getText().equalsIgnoreCase(currency)).findFirst();
+        if (ele.isPresent()) {
+            highlightAndReset(ele.get());
+            return true;
+        } else return false;
     }
 }

@@ -69,14 +69,21 @@ public class DashBoard extends BasePage {
     }
 
     public boolean selectCurrency(String currency) {
-//        Select select = new Select(currencyDropdown);
-//        Optional<WebElement> ele = select.getOptions().stream().filter(e -> e.getText().equalsIgnoreCase(currency)).findFirst();
+
         if(currencyOptions.get(0).isDisplayed())
             clickOnCurrencyDropdown();
-        Optional<WebElement> ele = currencyOptions.stream().filter(e -> e.getText().equalsIgnoreCase(currency)).findFirst();
-        if (ele.isPresent()) {
-            highlightAndReset(ele.get());
-            return true;
-        } else return false;
+        Select select = new Select(currencyDropdown);
+        System.out.println(select.getAllSelectedOptions().get(0).getText());
+        select.selectByVisibleText(currency);
+        System.out.println(select.getAllSelectedOptions().get(0).getText());
+        highlightAndReset(currencyDropdown);
+//        System.out.println(currencyDropdown.getText());
+//        System.out.println(currencyOptions.get(0).isDisplayed());
+//        Optional<WebElement> ele = currencyOptions.stream().filter(e -> e.getText().equalsIgnoreCase(currency)).findFirst();
+//        if (ele.isPresent()) {
+//            highlightAndReset(ele.get());
+//            return true;
+//        } else return false;
+        return true;
     }
 }

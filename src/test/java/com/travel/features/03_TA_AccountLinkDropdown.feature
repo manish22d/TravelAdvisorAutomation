@@ -24,3 +24,4 @@ Feature: Travel Advisor Portal Dashboard Account Link dropdown
     And verify "US Dollar" is available currency dropdown
     And verify "Japanese Yen" is available currency dropdown
     And verify "Mexican Peso" is available currency dropdown
+    And get screenshot

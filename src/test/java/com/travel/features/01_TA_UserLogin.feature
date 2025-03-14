@@ -9,3 +9,4 @@ Feature: User Login Functionality
     And I click the next button
     Then I should be successfully logged in
     And I should see the Travel Advisor Portal dashboard
+

@@ -25,6 +25,21 @@ public class LaunchPage extends BasePage {
     @FindBy(css = "span.HeaderLink__text p")
     WebElement acceptCookieBtn;
 
+    @FindBy(xpath = "//button[.='Sign Up']")
+    WebElement signUpBtn;
+
+    @FindBy(xpath = "//button[.='Yes']")
+    WebElement yesbtn;
+
+    @FindBy(id = "input[id=':rg:']")
+    WebElement emailRegTxtBox;
+
+    @FindBy(css = "input[id=':rh:']")
+    WebElement pwdRegTxtBox;
+
+    @FindBy(xpath = "//div[@id='modal-root']//button[.='Next']")
+    WebElement nextRegBtn;
+
     @FindBy(css = "button.top-info__close")
     List<WebElement> closeInfoBtn;
 
@@ -76,6 +91,20 @@ public class LaunchPage extends BasePage {
         highlightAndClick(nextBtn);
         wait.until(visibilityOf(myAccountLink));
         return new DashBoard();
+    }
+    public LaunchPage signUpWithExistingAccount(){
+        highlightAndClick(signUpBtn);
+        wait.until(visibilityOf(yesbtn));
+        highlightAndClick(yesbtn);
+        return this;
+    }
+
+    public void enterRegEmailAndPass(){
+        String user = property.getProperty("app.ta.reg.email");
+        String cred = property.getProperty("app.ta.reg.cred");
+        fillText(emailRegTxtBox, user);
+        fillText(pwdRegTxtBox, cred);
+        highlightAndClick(nextRegBtn);
     }
 
 }

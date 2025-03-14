@@ -98,4 +98,42 @@ public class TravelAdvisorStepDef {
     public void verifyIsAvailableCurrencyDropdown(String currency) {
         assertTrue(dashBoard.selectCurrency(currency));
     }
+
+    @When("the user selects to register with an existing I Prefer account")
+    public void theUserSelectsToRegisterWithAnExistingIPreferAccount() {
+        launchPage.signUpWithExistingAccount();
+    }
+
+    @And("the user enters valid I Prefer account credentials")
+    public void theUserEntersValidIPreferAccountCredentials() {
+        launchPage.enterRegEmailAndPass();
+    }
+
+
+
+    @Then("the system should check if the account is verified")
+    public void theSystemShouldCheckIfTheAccountIsVerified() {
+    }
+
+    @And("the system should display a message: {string}")
+    public void theSystemShouldDisplayAMessage(String arg0) {
+    }
+
+    @And("the user should be unable to proceed with registration")
+    public void theUserShouldBeUnableToProceedWithRegistration() {
+    }
+
+    @When("the user clicks {string}")
+    public void theUserClicks(String arg0) {
+    }
+
+    @Then("the system should revalidate the account status")
+    public void theSystemShouldRevalidateTheAccountStatus() {
+    }
+
+    @And("if the email is still unverified, the same error message should be displayed")
+    public void ifTheEmailIsStillUnverifiedTheSameErrorMessageShouldBeDisplayed() {
+    }
+
+
 }

@@ -6,6 +6,7 @@ import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.travel.core.WebDriverManager;
 import com.travel.pages.DashBoard;
 import com.travel.pages.LaunchPage;
+import com.travel.pages.ProfilePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,17 +15,21 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 public class TravelAdvisorStepDef {
     LaunchPage launchPage;
     DashBoard dashBoard;
+    ProfilePage profilePage;
 
     public TravelAdvisorStepDef() {
         launchPage = new LaunchPage();
     }
 
-    @Given("user launch's travel advisor portal")
+    @Given("user is logged into the travel advisor portal")
     public void userLaunchPreferredTravelApplication() {
 //        launchPage = new LaunchPage();
         dashBoard = launchPage.launchTravelAdvisorPortal().performLogin();
@@ -110,7 +115,6 @@ public class TravelAdvisorStepDef {
     }
 
 
-
     @Then("the system should check if the account is verified")
     public void theSystemShouldCheckIfTheAccountIsVerified() {
     }
@@ -133,6 +137,40 @@ public class TravelAdvisorStepDef {
 
     @And("if the email is still unverified, the same error message should be displayed")
     public void ifTheEmailIsStillUnverifiedTheSameErrorMessageShouldBeDisplayed() {
+    }
+
+
+    @When("user navigates to {string} page")
+    public void userNavigatesToPage(String pageName) {
+        profilePage = dashBoard.navigateToPage(pageName);
+    }
+
+    @And("verify page title is {string}")
+    public void verifyPageTitleIs(String title) {
+        assertEquals(title, profilePage.isTitleAvailable());
+    }
+
+    @Then("verify the personal details fields are displayed")
+    public void verifyThePersonalDetailsFieldsAreDisplayed(List<String> fields) {
+        for (String field : fields)
+            assertTrue(profilePage.isPersonalDetailsFieldDisplayedById(field));
+
+    }
+
+    @Then("verify the travel agency details fields are displayed")
+    public void verifyTheTravelAgencyDetailsFieldsAreDisplayed(List<String> fields) {
+        for (String field : fields)
+            assertTrue(profilePage.isAgencyFieldDisplayedByLabel(field));
+    }
+
+    @And("user update {string} into Agency ID field")
+    public void userEntersIntoField(String agentId) {
+        profilePage.updateAgencyId(agentId).saveTAInfo();
+    }
+
+    @Then("message {string} should appear")
+    public void messageShouldAppear(String expectedMsg) {
+        assertEquals(expectedMsg, profilePage.getDisplayMsg());
     }
 
 

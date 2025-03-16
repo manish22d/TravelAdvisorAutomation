@@ -54,13 +54,17 @@ public class WebActions {
         actions.moveToElement(ele).build().perform();
         return ele;
     }
+    public WebElement scrollToElement(WebElement ele) {
+        actions.scrollToElement(ele).build().perform();
+        return ele;
+    }
 
     public void moveToElementAndClick(WebElement ele) {
         actions.moveToElement(ele).click().build().perform();
     }
 
     public void pause(int sec) {
-        System.out.printf("paused execution for %d sec %n", sec);
+//        System.out.printf("paused execution for %d sec %n", sec);
         try {
             Thread.sleep(sec * 1000L);
         } catch (InterruptedException e) {
@@ -121,6 +125,15 @@ public class WebActions {
         moveToElement(ele);
         setAttributeStyle(ele, originalStyle);
         ele.sendKeys(text);
+    }
+
+    public void highlightAndResetTextField(WebElement ele) {
+        String originalStyle = ele.getAttribute("style");
+        setAttributeStyle(ele,
+                "color: yellow; border: 5px solid blue; background-color: yellow;");
+        moveToElement(ele);
+        pause(1);
+        setAttributeStyle(ele, originalStyle);
     }
 
 }

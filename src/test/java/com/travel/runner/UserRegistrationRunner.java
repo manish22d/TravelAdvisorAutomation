@@ -2,7 +2,6 @@ package com.travel.runner;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
@@ -10,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/java/com/travel/features"},
         plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
         glue = {"com.travel.stepdef"},
-        tags = "@TravelAdvisor")
-public class AllTestRunner {
+        tags = "@InvaliduserLogin")
+public class UserRegistrationRunner {
 }

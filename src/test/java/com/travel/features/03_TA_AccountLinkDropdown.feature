@@ -4,7 +4,7 @@ Feature: Travel Advisor Portal Dashboard Account Link dropdown
 
   @DashboardDropdown
   Scenario: Verify account link dropdown is working
-    Given user launch's travel advisor portal
+    Given user is logged into the travel advisor portal
     When user hovers over account link dropdown
     Then verify "Profile" option is available
     And verify "My Reservations" option is available

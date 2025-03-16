@@ -50,9 +50,10 @@ public class DashBoard extends BasePage {
         return memberIdTxt.isDisplayed();
     }
 
-    public void hoverOverMyAccountLink() {
+    public DashBoard hoverOverMyAccountLink() {
         highlightAndReset(myAccountLink);
         moveToElement(myAccountLink);
+        return this;
     }
 
     public boolean isDropdownOptionAvailable(String dropdownOption) {
@@ -70,20 +71,25 @@ public class DashBoard extends BasePage {
 
     public boolean selectCurrency(String currency) {
 
-        if(currencyOptions.get(0).isDisplayed())
+        if (currencyOptions.get(0).isDisplayed())
             clickOnCurrencyDropdown();
         Select select = new Select(currencyDropdown);
         System.out.println(select.getAllSelectedOptions().get(0).getText());
         select.selectByVisibleText(currency);
         System.out.println(select.getAllSelectedOptions().get(0).getText());
         highlightAndReset(currencyDropdown);
-//        System.out.println(currencyDropdown.getText());
-//        System.out.println(currencyOptions.get(0).isDisplayed());
-//        Optional<WebElement> ele = currencyOptions.stream().filter(e -> e.getText().equalsIgnoreCase(currency)).findFirst();
-//        if (ele.isPresent()) {
-//            highlightAndReset(ele.get());
-//            return true;
-//        } else return false;
         return true;
     }
+
+    public ProfilePage navigateToPage(String pageName) {
+        hoverOverMyAccountLink();
+        wait.until(visibilityOfAllElements(dropdownOptions));
+        Optional<WebElement> ele = dropdownOptions.stream().filter(e -> e.getText().equalsIgnoreCase(pageName)).findFirst();
+        ele.ifPresent(WebElement::click);
+        waitForPageToLoad();
+        pause(5);
+        return new ProfilePage();
+    }
+
+
 }

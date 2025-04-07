@@ -26,7 +26,6 @@
         <json-path.version>2.8.0</json-path.version>
     </properties>
     <dependencies>
-
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -52,12 +51,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>${cucumber.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>

@@ -4,9 +4,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.travel.core.WebDriverManager;
-import com.travel.pages.DashBoard;
-import com.travel.pages.LaunchPage;
-import com.travel.pages.ProfilePage;
+import com.travel.pages.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,6 +22,9 @@ public class TravelAdvisorStepDef {
     LaunchPage launchPage;
     DashBoard dashBoard;
     ProfilePage profilePage;
+    MakeAReservationPage makeAReservationPage;
+
+    BookingPage bookingPage;
 
     public TravelAdvisorStepDef() {
         launchPage = new LaunchPage();
@@ -43,6 +44,11 @@ public class TravelAdvisorStepDef {
     @Then("verify tab {string} displayed in dashboard")
     public void verifyTabDisplayedInDashboard(String tabName) {
         assertTrue(dashBoard.isTabsOptionsAvailable(tabName));
+    }
+
+    @Then("User navigates to tab {string}")
+    public void userNavigatesToTab(String tabName) {
+        dashBoard.navigateToTab(tabName);
     }
 
     @And("get screenshot")
@@ -174,4 +180,42 @@ public class TravelAdvisorStepDef {
     }
 
 
+    @And("User search for {string} hotel")
+    public void userSearchForHotel(String hotelName) {
+        makeAReservationPage = new MakeAReservationPage();
+        makeAReservationPage.searchForHotel(hotelName);
+    }
+
+    @And("user selects rate and room for booking")
+    public void userSelectsRateAndRoomForBooking() {
+        bookingPage = makeAReservationPage.selectBookingOption();
+    }
+
+    @Then("user enters person information")
+    public void userEntersPersonInformation(List<Map<String, String>> personalDetails) {
+        bookingPage.enterPersonalDetails(personalDetails.get(0));
+    }
+
+    @And("user enter agentId as {string}")
+    public void userEnterAgentIdAs(String agentId) {
+        bookingPage.enterAgentId(agentId);
+    }
+
+    @And("user enter payment information")
+    public void userEnterPaymentInformation(List<Map<String, String>> paymentDetails) {
+        bookingPage.enterPaymentInfo(paymentDetails.get(0));
+    }
+
+    @And("user accepts terms and click on submit")
+    public void userAcceptsTermsAndClickOnSubmit() {
+        bookingPage.enterMsgToClient("Test").agreeToTerms().submit();
+    }
+
+    @Then("verify confirmation message {string} appears")
+    public void verifyConfirmationMessageAppears(String expectedMsg) {
+        System.out.println(expectedMsg);
+        String actualMsg = bookingPage.getSuccessMsg();
+        System.out.println(actualMsg);
+        assertEquals(expectedMsg, actualMsg);
+    }
 }

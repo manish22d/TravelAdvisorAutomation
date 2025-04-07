@@ -13,7 +13,7 @@ Feature: Travel Advisor Profile page
       | Address     |
       | Country     |
       | City        |
-      | State        |
+      | State       |
       | Postal Code |
     Then verify the travel agency details fields are displayed
       | Travel Agency Name         |

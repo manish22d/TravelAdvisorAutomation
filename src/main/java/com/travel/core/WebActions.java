@@ -23,8 +23,7 @@ public class WebActions {
         actions = new Actions(this.driver);
     }
 
-
-    public WebElement fluentWait(WebElement element) {
+    protected WebElement fluentWait(WebElement element) {
         try {
             Wait<WebDriver> wait = new FluentWait<>(driver)
                     .withTimeout(Duration.ofSeconds(20))
@@ -32,7 +31,6 @@ public class WebActions {
                     .ignoring(NoSuchElementException.class)
                     .ignoring(ElementNotInteractableException.class);
             wait.until(ExpectedConditions.visibilityOf(element));
-
         } catch (ElementNotInteractableException e) {
             e.printStackTrace();
         }
@@ -44,17 +42,18 @@ public class WebActions {
      *
      * @param locator locator
      */
-    public void clickWhenReady(By locator) {
+    protected void clickWhenReady(By locator) {
 
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
     }
 
-    public WebElement moveToElement(WebElement ele) {
+    protected WebElement moveToElement(WebElement ele) {
         actions.moveToElement(ele).build().perform();
         return ele;
     }
-    public WebElement scrollToElement(WebElement ele) {
+
+    protected WebElement scrollToElement(WebElement ele) {
         actions.scrollToElement(ele).build().perform();
         return ele;
     }
@@ -72,7 +71,7 @@ public class WebActions {
         }
     }
 
-    public void waitForPageToLoad() {
+    protected void waitForPageToLoad() {
         System.out.println("Waiting for page to load completely " + LocalDateTime.now());
         wait.until((ExpectedCondition) webDriver ->
                 ((JavascriptExecutor) webDriver).executeScript("return document.readyState").toString().equalsIgnoreCase("complete")
@@ -80,7 +79,7 @@ public class WebActions {
         System.out.println("Page load completed " + LocalDateTime.now());
     }
 
-    public void fillText(WebElement ele, String txt) {
+    protected void fillText(WebElement ele, String txt) {
         String originalStyle = ele.getAttribute("style");
         setAttributeStyle(ele,
                 "color: yellow; border: 5px solid blue; background-color: yellow;");
@@ -91,20 +90,20 @@ public class WebActions {
         setAttributeStyle(ele, originalStyle);
     }
 
-    public void fillTextAndSelectResult(WebElement ele, String txt) {
+    protected void fillTextAndSelectResult(WebElement ele, String txt) {
         fillText(ele, txt);
         List<WebElement> eles = driver.findElements(By.cssSelector("#typeaheadmenu li:first-child a"));
         if (eles.size() > 0)
             eles.get(0).click();
     }
 
-    public void highlightAndClick(WebElement ele) {
+    protected void highlightAndClick(WebElement ele) {
         wait.until(elementToBeClickable(ele));
         highlightAndReset(ele);
         ele.click();
     }
 
-    public void highlightAndReset(WebElement ele) {
+    protected void highlightAndReset(WebElement ele) {
         String originalStyle = ele.getAttribute("style");
         moveToElement(ele);
         setAttributeStyle(ele,
@@ -118,7 +117,7 @@ public class WebActions {
         js.executeScript("arguments[0].setAttribute('style', '" + value + "')", element);
     }
 
-    public void highlightAndFillText(WebElement ele, String text) {
+    protected void highlightAndFillText(WebElement ele, String text) {
         String originalStyle = ele.getAttribute("style");
         setAttributeStyle(ele,
                 "color: yellow; border: 5px solid blue; background-color: yellow;");
@@ -127,7 +126,7 @@ public class WebActions {
         ele.sendKeys(text);
     }
 
-    public void highlightAndResetTextField(WebElement ele) {
+    protected void highlightAndResetTextField(WebElement ele) {
         String originalStyle = ele.getAttribute("style");
         setAttributeStyle(ele,
                 "color: yellow; border: 5px solid blue; background-color: yellow;");
@@ -136,4 +135,10 @@ public class WebActions {
         setAttributeStyle(ele, originalStyle);
     }
 
+
+    protected void selectFromDropdown(WebElement ele, String txt) {
+        wait.until(visibilityOf(ele));
+        Select select = new Select(ele);
+        select.selectByValue(txt);
+    }
 }

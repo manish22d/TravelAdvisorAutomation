@@ -92,4 +92,9 @@ public class DashBoard extends BasePage {
     }
 
 
+    public void navigateToTab(String tabName) {
+        wait.until(visibilityOfAllElements(tabs));
+        Optional<WebElement> ele = tabs.stream().filter(e -> e.findElement(By.cssSelector("h2")).getText().equalsIgnoreCase(tabName)).findFirst();
+        ele.ifPresent(this::highlightAndClick);
+    }
 }
